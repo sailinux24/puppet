@@ -38,7 +38,54 @@ node 'client.example.com'{
     enable => true,
           }
 }
-#puppet parser validate site.pp #to check errors
+
+
+
+
+node 'client2.example.com'{
+     
+    file{'/info.txt':
+    ensure => 'present',
+    content => "created by puppet",
+      }
+    package{'httpd':
+    ensure => 'present',
+         }
+    service{'httpd':
+    ensure => 'running',
+    enable => true,
+          }
+}
+
++++
+CLASSES
+++
+
+
+
+node 'client.example.com'{
+      class{'linux':}
+      }
+node 'client2.example.com'{
+      class{'linux':}
+      }
+class linux{     
+    file{'/info.txt':
+    ensure => 'present',
+    content => "created by puppet",
+      }
+    package{'httpd':
+    ensure => 'present',
+         }
+    service{'httpd':
+    ensure => 'running',
+    enable => true,
+          }
+}
+
+++++
+
+#puppet parser validate site.pp         #to check errors
 
 on agent run
 
