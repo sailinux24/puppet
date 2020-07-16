@@ -138,6 +138,59 @@ ENVIROMENT isolation
  server=master.example.com
 environment=testing
 
+ ##########
  
+ MODULES
+ 
+ [root@master modules]# pwd
+/etc/puppetlabs/code/environments/testing/modules
+[root@master modules]# 
+
+puppet module generate sai-demomodule --environment testing
+
+cd demomodule/demomodule/manifests/
+
+vi init.pp                    ###append at end below lines
+
+class demomodule {
+   package{'php-mysql':,
+   ensure => 'present',
+          }
+   package{'php-xml':,
+   ensure => 'present',
+         }
+}
+}
+
+#check syntax errors   and go to main site.pp and call this modules
+
+[root@master manifests]# cat site.pp 
+
+node 'client.example.com'{
+      class{'linux':}
+      }
+    class{'demomodule':}                                                      ####### module is called###
+     
+node 'client2.example.com'{
+      class{'linux':}
+      }
+class linux{ 
+    file{'/info2.txt':
+    ensure => 'present',
+    content => "created by puppet",
+      }
+    package{'httpd':
+    ensure => 'present',
+         }
+    service{'httpd':
+    ensure => 'running',
+    enable => true,
+          }
+}
+
+#check errors puppet parser validate site.pp and check on agent puppet agent -t
+
+
+
 
 
