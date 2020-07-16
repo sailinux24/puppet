@@ -1,0 +1,56 @@
+[root@master ~]# cat puppet.txt 
+rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+
+yum install puppet-server
+
+puppet resource package puppet-server ensure=latest
+
++++
+[root@master ~]# cat /etc/puppet/puppet.conf | grep -A 2 dns_alt_names
+    dns_alt_names = master,master.example.com
+    certname = master.example.com
+
+[root@master ~]# 
+++++
+
+systemctl status puppetmaster
+
+sudo -u puppet puppet master --no-daemonize --verbose
+
+Allow firewall firewall-cmd --permanent --add-port=8140/tcp and udp or disable it
+
+systemctl restart puppetmaster
+
+
++++
+client 
+
+rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+
+yum install puppet
+
+puppet resource package puppet ensure=latest
+
+[root@client ~]# cat /etc/puppet/puppet.conf | grep -A 2 ca_server
+   ca_server=master.example.com
+    server=master.example.com
+   
+systemctl restart puppet
+++++
+Again 
+on master
+
+puppet cert list
+puppet agent --fingerprint 
+puppet cert list
+puppet cert sign client.example.com
+puppet cert list --all 
+Again on agent
+
+puppet agent -t
+[root@client ~]# puppet agent -t
+Info: Retrieving pluginfacts
+Info: Retrieving plugin
+Info: Caching catalog for client.example.com
+Info: Applying configuration version '1594878665'
+Notice: Finished catalog run in 0.01 seconds
