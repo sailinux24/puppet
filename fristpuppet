@@ -1,0 +1,11 @@
+cat site.pp 
++++
+node 'client.example.com'{
+     
+    file{'/info.txt':
+    ensure => 'present',
+    content => "created by puppet",
+      }
+}
+++
+puppet parser validate site.pp #to check errors
