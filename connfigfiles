@@ -1,6 +1,23 @@
 [root@master ~]# cat puppet.txt 
 
 rpm -Uvh https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
+
+change to half of the ram
+cat /etc/sysconfig/puppetserver | grep -i 512m
+JAVA_ARGS="-Xms512m -Xmx512m -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"
+[root@master manifests]# 
+
+
+[master]
+dns_alt_names=master.example.com
+certname=master.example.com
+enviroment=production
+
+then start puppetserver
+
+
+
+
 rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
 
 yum install puppet-server
