@@ -9,3 +9,46 @@ node 'client.example.com'{
 }
 ++
 puppet parser validate site.pp #to check errors
+
+
+node 'client.example.com'{
+     
+    file{'/info.txt':
+    ensure => 'present',
+    content => "created by puppet",
+      }
+    package{'httpd':
+    ensure => 'present',
+         }
+}
+
++++++
+#cat site.pp 
+node 'client.example.com'{
+     
+    file{'/info.txt':
+    ensure => 'present',
+    content => "created by puppet",
+      }
+    package{'httpd':
+    ensure => 'present',
+         }
+    service{'httpd':
+    ensure => 'running',
+    enable => true,
+          }
+}
+#puppet parser validate site.pp #to check errors
+
+on agent run
+
+ puppet agent -t
+Info: Retrieving pluginfacts
+Info: Retrieving plugin
+Info: Caching catalog for client.example.com
+Info: Applying configuration version '1594882048'
+Notice: /Stage[main]/Main/Node[client.example.com]/Service[httpd]/ensure: ensure changed 'stopped' to 'running'
+Info: /Stage[main]/Main/Node[client.example.com]/Service[httpd]: Unscheduling refresh on Service[httpd]
+Notice: Finished catalog run in 0.26 seconds
+
+
