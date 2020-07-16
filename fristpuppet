@@ -98,4 +98,46 @@ Notice: /Stage[main]/Main/Node[client.example.com]/Service[httpd]/ensure: ensure
 Info: /Stage[main]/Main/Node[client.example.com]/Service[httpd]: Unscheduling refresh on Service[httpd]
 Notice: Finished catalog run in 0.26 seconds
 
+####################
+[root@master manifests]# cat site.pp 
+
+node 'client.example.com'{
+      class{'linux':}
+      }
+node 'client2.example.com'{
+      class{'linux':}
+      }
+class linux{ 
+    $admintools=['git','vim','wget']
+    package{$admintools:
+    ensure => true,
+          }    
+    file{'/info.txt':
+    ensure => 'present',
+    content => "created by puppet",
+      }
+    package{'httpd':
+    ensure => 'present',
+         }
+    service{'httpd':
+    ensure => 'running',
+    enable => true,
+          }
+}
+#######################
+
+ENVIROMENT isolation
+
+[root@master environments]# pwd
+/etc/puppetlabs/code/environments
+ create testing  env and copy mainfests and modules dir
+ and create site.pp
+ ++
+ on agent add env as testing
+ cat /etc/puppetlabs/puppet/puppet.conf
+ server=master.example.com
+environment=testing
+
+ 
+
 
