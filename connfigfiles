@@ -17,7 +17,6 @@ then start puppetserver
 
 
 
-
 rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
 
 yum install puppet-server
@@ -44,13 +43,14 @@ systemctl restart puppetmaster
 +++
 client 
 
-rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+
 
 yum install puppet
 
 puppet resource package puppet ensure=latest
 
-[root@client ~]# cat /etc/puppet/puppet.conf | grep -A 2 ca_server
+[root@client ~]# cat /etc/puppet/puppet.conf | grep -A 3 ca_server
+    runinterval=1m
    ca_server=master.example.com
     server=master.example.com
    
