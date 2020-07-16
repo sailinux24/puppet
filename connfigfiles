@@ -1,4 +1,6 @@
 [root@master ~]# cat puppet.txt 
+
+rpm -Uvh https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
 rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
 
 yum install puppet-server
