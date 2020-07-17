@@ -1,13 +1,15 @@
-[root@master ~]# cat puppet.txt 
+
 
 rpm -Uvh https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
+
+yum install puppet-server
 
 change to half of the ram
 cat /etc/sysconfig/puppetserver | grep -i 512m
 JAVA_ARGS="-Xms512m -Xmx512m -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"
 [root@master manifests]# 
 
-
+cat /etc/puppetlabs/puppet/puppet.conf 
 [master]
 dns_alt_names=master.example.com
 certname=master.example.com
@@ -19,17 +21,7 @@ then start puppetserver
 
 rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
 
-yum install puppet-server
 
-puppet resource package puppet-server ensure=latest
-
-+++
-[root@master ~]# cat /etc/puppet/puppet.conf | grep -A 2 dns_alt_names
-    dns_alt_names = master,master.example.com
-    certname = master.example.com
-
-[root@master ~]# 
-++++
 
 systemctl status puppetmaster
 
