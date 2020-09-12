@@ -2,7 +2,7 @@
 
 rpm -Uvh https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
 
-yum install puppet-server
+yum install puppetserver
 
 change to half of the ram
 cat /etc/sysconfig/puppetserver | grep -i 512m
